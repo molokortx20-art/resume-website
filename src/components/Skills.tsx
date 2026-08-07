@@ -1,86 +1,71 @@
-// skills component
 import React, { useState } from 'react';
 import { Skill } from '../types';
-import { Cpu, Code2, Server, Terminal, Database, FileCode, Layout, Zap, Gamepad2, Globe, Layers } from 'lucide-react';
-import { PixelCard, TerminalText } from './TerminalComponents';
+import { Cpu } from 'lucide-react';
 
 interface SkillsProps {
   skills: Skill[];
 }
 
 export const Skills: React.FC<SkillsProps> = ({ skills }) => {
-  const [activeTab, setActiveTab] = useState<string>('Все');
+  const [activeCategory, setActiveCategory] = useState<string>('All');
 
-  // categories
-  const categories = ['Все', 'Frontend', 'Backend & DB', 'System & Game Dev'];
+  const categories = ['All', 'Frontend', 'Backend & DB', 'System & Game Dev'];
 
-  const filteredSkills = activeTab === 'Все'
-    ? skills
-    : skills.filter(s => s.category.toLowerCase().includes(activeTab.toLowerCase()) || activeTab.toLowerCase().includes(s.category.toLowerCase()));
-
-  // skill icon helper
-  const getSkillIcon = (name: string) => {
-    const n = name.toLowerCase();
-    if (n.includes('react')) return <Code2 size={20} className="text-accent" />;
-    if (n.includes('typescript') || n.includes('javascript')) return <FileCode size={20} className="text-accent" />;
-    if (n.includes('html') || n.includes('css')) return <Layout size={20} className="text-accent" />;
-    if (n.includes('vite')) return <Zap size={20} className="text-accent" />;
-    if (n.includes('node') || n.includes('express')) return <Server size={20} className="text-accent" />;
-    if (n.includes('sql') || n.includes('db')) return <Database size={20} className="text-accent" />;
-    if (n.includes('linux') || n.includes('bash')) return <Terminal size={20} className="text-accent" />;
-    if (n.includes('nginx')) return <Cpu size={20} className="text-accent" />;
-    if (n.includes('garry') || n.includes('lua')) return <Gamepad2 size={20} className="text-accent" />;
-    if (n.includes('php')) return <Globe size={20} className="text-accent" />;
-    return <Layers size={20} className="text-accent" />;
-  };
+  const filteredSkills = activeCategory === 'All' 
+    ? skills 
+    : skills.filter(s => s.category === activeCategory);
 
   return (
-    <section id="skills" style={{ padding: '80px 0', background: 'var(--bg-secondary)' }}>
-      <div className="container">
-        {/* header */}
-        <h2 className="section-title">
-          <Cpu className="text-accent" size={32} />
-          <span>Технические <span className="text-gradient">Навыки & Стек</span></span>
-        </h2>
-        <div style={{ marginBottom: '24px' }}>
-          <TerminalText text="fetch --stack-metrics --all-categories" prefix="$ " />
+    <section id="skills" className="py-20">
+      <div className="max-w-7xl mx-auto px-4 space-y-10">
+        
+        <div className="space-y-2">
+          <span className="text-xs font-mono tracking-widest text-emerald-500 uppercase">НАВЫКИ & СТЕК</span>
+          <h2 className="text-3xl font-extrabold flex items-center gap-3 theme-text-main">
+            <Cpu className="text-emerald-500" size={32} />
+            <span>Технологический Стек</span>
+          </h2>
+          <p className="theme-text-muted text-sm">Технологии и фреймворки, используемые в коммерческих и инфраструктурных проектах.</p>
         </div>
 
-        {/* tab buttons */}
-        <div className="skills-tabs">
-          {categories.map(cat => (
+        {/* Tabs */}
+        <div className="flex items-center gap-2.5 flex-wrap">
+          {categories.map((cat) => (
             <button
               key={cat}
-              onClick={() => setActiveTab(cat)}
-              className={`tab-btn ${activeTab === cat ? 'active' : ''}`}
+              onClick={() => setActiveCategory(cat)}
+              className={`px-5 py-2 rounded-full font-semibold text-xs transition border ${
+                activeCategory === cat 
+                  ? 'bg-emerald-500 text-black border-emerald-500 font-bold' 
+                  : 'theme-card theme-text-muted hover:theme-text-main'
+              }`}
             >
-              {cat}
+              {cat === 'All' ? 'Все технологии' : cat}
             </button>
           ))}
         </div>
 
-        {/* skills grid */}
-        <div className="skills-grid">
-          {filteredSkills.map(skill => (
-            <PixelCard key={skill.id} style={{ padding: '20px' }}>
-              <div className="skill-header">
-                <div className="skill-title font-mono">
-                  {getSkillIcon(skill.name)}
-                  <span>{skill.name}</span>
-                </div>
-                <span className="skill-percent">{skill.percentage}%</span>
+        {/* Skills Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+          {filteredSkills.map((skill) => (
+            <div key={skill.id} className="theme-card rounded-2xl p-6 group">
+              <div className="flex items-center justify-between font-mono">
+                <span className="font-bold text-sm theme-text-main group-hover:text-emerald-500 transition">{skill.name}</span>
+                <span className="text-emerald-500 font-extrabold text-xs">{skill.percentage}%</span>
               </div>
+              
+              <div className="text-xs theme-text-dim font-mono mt-1">{skill.category}</div>
 
-              {/* progress bar */}
-              <div className="progress-bar-bg">
-                <div
-                  className="progress-bar-fill"
+              <div className="w-full h-1.5 theme-inner-box rounded-full overflow-hidden mt-3">
+                <div 
+                  className="h-full bg-emerald-500 rounded-full transition-all duration-500"
                   style={{ width: `${skill.percentage}%` }}
                 ></div>
               </div>
-            </PixelCard>
+            </div>
           ))}
         </div>
+
       </div>
     </section>
   );

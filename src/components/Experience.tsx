@@ -1,88 +1,53 @@
-// experience component
-import React, { useState } from 'react';
-import { ExperienceItem } from '../types';
-import { Briefcase, ChevronDown, ChevronUp, Calendar, Layers } from 'lucide-react';
-import { PixelCard, TerminalText } from './TerminalComponents';
+import React from 'react';
+import { Experience as ExpType } from '../types';
+import { Briefcase } from 'lucide-react';
 
 interface ExperienceProps {
-  experience: ExperienceItem[];
+  experience: ExpType[];
 }
 
 export const Experience: React.FC<ExperienceProps> = ({ experience }) => {
-  // accordion state
-  const [openIds, setOpenIds] = useState<number[]>([experience[0]?.id || 1]);
-
-  const toggleAccordion = (id: number) => {
-    setOpenIds(prev =>
-      prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
-    );
-  };
-
   return (
-    <section id="experience" style={{ padding: '80px 0' }}>
-      <div className="container">
-        {/* title */}
-        <h2 className="section-title">
-          <Briefcase className="text-accent" size={32} />
-          <span>Опыт <span className="text-gradient">Разработки & Администрирования</span></span>
-        </h2>
-        <div style={{ marginBottom: '24px' }}>
-          <TerminalText text="git log --experience-history --author='molokortx20-art'" prefix="$ " />
+    <section id="experience" className="py-20">
+      <div className="max-w-7xl mx-auto px-4 space-y-10">
+        
+        <div className="space-y-2">
+          <span className="text-xs font-mono tracking-widest text-emerald-500 uppercase">ОПЫТ РАБОТЫ</span>
+          <h2 className="text-3xl font-extrabold flex items-center gap-3 theme-text-main">
+            <Briefcase className="text-emerald-500" size={32} />
+            <span>Инфраструктура & Разработка</span>
+          </h2>
+          <p className="theme-text-muted text-sm">Опыт создания сетевых панелей, администрирования серверов и fullstack-разработки.</p>
         </div>
 
-        {/* list */}
-        <div className="experience-list">
-          {experience.map(exp => {
-            const isOpen = openIds.includes(exp.id);
-            const techList = exp.technologies ? exp.technologies.split(',').map(t => t.trim()) : [];
-
-            return (
-              <PixelCard
-                key={exp.id}
-                style={{ padding: '24px', cursor: 'pointer' }}
-                onClick={() => toggleAccordion(exp.id)}
-              >
-                {/* header */}
-                <div className="exp-header">
-                  <div>
-                    <h3 className="exp-title font-mono">{exp.position}</h3>
-                    <div className="exp-company font-mono">{exp.company}</div>
-                  </div>
-
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                    <div className="exp-period">
-                      <Calendar size={13} style={{ display: 'inline', marginRight: '6px' }} />
-                      {exp.period}
-                    </div>
-
-                    <button style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}>
-                      {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-                    </button>
-                  </div>
+        <div className="space-y-6">
+          {experience.map((exp) => (
+            <div key={exp.id} className="theme-card rounded-3xl p-8 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--border-main)] pb-4">
+                <div>
+                  <h3 className="text-xl font-bold theme-text-main">{exp.position}</h3>
+                  <div className="text-emerald-500 font-mono text-sm font-semibold pt-1">{exp.company}</div>
                 </div>
+                <span className="px-3.5 py-1 rounded-full theme-inner-box font-mono text-xs text-emerald-500 self-start sm:self-auto font-semibold">{exp.period}</span>
+              </div>
 
-                {/* details */}
-                {isOpen && (
-                  <div className="exp-details">
-                    <p style={{ lineHeight: '1.7', marginBottom: '16px' }}>{exp.description}</p>
+              <p className="theme-text-muted leading-relaxed text-sm sm:text-base">
+                {exp.description}
+              </p>
 
-                    {/* tags */}
-                    {techList.length > 0 && (
-                      <div className="tech-tags">
-                        <span style={{ fontSize: '0.85rem', color: 'var(--text-dim)', alignSelf: 'center', display: 'flex', alignItems: 'center', gap: '4px' }} className="font-mono">
-                          <Layers size={14} /> Стек:
-                        </span>
-                        {techList.map((t, idx) => (
-                          <span key={idx} className="tag">{t}</span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                )}
-              </PixelCard>
-            );
-          })}
+              {exp.technologies && (
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {exp.technologies.split(',').map((tech, idx) => (
+                    <span key={idx} className="px-3 py-1 rounded-full theme-inner-box text-xs font-mono theme-text-muted">
+                      {tech.trim()}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
         </div>
+
       </div>
     </section>
   );

@@ -1,127 +1,71 @@
-// projects component
-import React, { useState } from 'react';
-import { ProjectItem } from '../types';
-import { FolderGit2, Github, ExternalLink, Code, Server, Gamepad2 } from 'lucide-react';
-import { PixelCard, TerminalText } from './TerminalComponents';
+import React from 'react';
+import { Project } from '../types';
+import { Layers, Github, ExternalLink } from 'lucide-react';
 
 interface ProjectsProps {
-  projects: ProjectItem[];
+  projects: Project[];
 }
 
 export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
-  const [filter, setFilter] = useState<string>('Все');
-
-  // filter categories
-  const categories = ['Все', 'Fullstack / Backend', 'Frontend', 'Game Dev / Systems'];
-
-  const filteredProjects = filter === 'Все'
-    ? projects
-    : projects.filter(p => p.category.toLowerCase().includes(filter.toLowerCase()) || filter.toLowerCase().includes(p.category.toLowerCase()));
-
-  // category icon
-  const getProjectIcon = (category: string) => {
-    if (category.includes('Game') || category.includes('Lua')) return <Gamepad2 size={24} className="text-accent" />;
-    if (category.includes('Fullstack')) return <Code size={24} className="text-accent" />;
-    return <Server size={24} className="text-accent" />;
-  };
-
   return (
-    <section id="projects" style={{ padding: '80px 0', background: 'var(--bg-secondary)' }}>
-      <div className="container">
-        {/* title */}
-        <h2 className="section-title">
-          <FolderGit2 className="text-accent" size={32} />
-          <span>Реальный Код & <span className="text-gradient">Репозитории</span></span>
-        </h2>
-        <div style={{ marginBottom: '24px' }}>
-          <TerminalText text="gh repo list molokortx20-art --type=public" prefix="$ " />
+    <section id="projects" className="py-20">
+      <div className="max-w-7xl mx-auto px-4 space-y-10">
+        
+        <div className="space-y-2">
+          <span className="text-xs font-mono tracking-widest text-emerald-500 uppercase">ПОРТФОЛИО</span>
+          <h2 className="text-3xl font-extrabold flex items-center gap-3 theme-text-main">
+            <Layers className="text-emerald-500" size={32} />
+            <span>Ключевые Проекты</span>
+          </h2>
+          <p className="theme-text-muted text-sm">Полноценные веб-сервисы, оверлеи и веб-системы управления.</p>
         </div>
 
-        {/* filter buttons */}
-        <div className="skills-tabs">
-          {categories.map(cat => (
-            <button
-              key={cat}
-              onClick={() => setFilter(cat)}
-              className={`tab-btn ${filter === cat ? 'active' : ''}`}
-            >
-              {cat}
-            </button>
+        <div className="grid md:grid-cols-3 gap-6">
+          {projects.map((project) => (
+            <div key={project.id} className="theme-card rounded-3xl p-6 flex flex-col justify-between space-y-6 group">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 text-xs font-mono font-bold">
+                    {project.badge || project.category}
+                  </span>
+                  <span className="text-xs font-mono theme-text-dim">{project.category}</span>
+                </div>
+
+                <h3 className="text-2xl font-bold theme-text-main group-hover:text-emerald-500 transition">
+                  {project.title}
+                </h3>
+
+                <p className="theme-text-muted text-sm leading-relaxed">
+                  {project.description}
+                </p>
+              </div>
+
+              <div className="space-y-4 pt-4 border-t border-[var(--border-main)]">
+                <div className="flex flex-wrap gap-1.5">
+                  {project.tech_stack.split(',').map((tech, idx) => (
+                    <span key={idx} className="px-2.5 py-0.5 rounded-md theme-inner-box text-[11px] font-mono theme-text-muted">
+                      {tech.trim()}
+                    </span>
+                  ))}
+                </div>
+
+                {project.github_url && (
+                  <a 
+                    href={project.github_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="theme-btn-outline text-xs w-full py-2.5 rounded-full flex items-center justify-center gap-2 font-semibold"
+                  >
+                    <Github size={15} />
+                    <span>Исходный код в GitHub</span>
+                    <ExternalLink size={14} className="theme-text-dim" />
+                  </a>
+                )}
+              </div>
+            </div>
           ))}
         </div>
 
-        {/* projects grid with pixel perfect equalized height */}
-        <div className="projects-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '24px', alignItems: 'stretch' }}>
-          {filteredProjects.map(project => {
-            const techList = project.tech_stack ? project.tech_stack.split(',').map(t => t.trim()) : [];
-
-            return (
-              <PixelCard key={project.id} style={{ padding: '28px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
-                {/* top section */}
-                <div style={{ flex: '1 1 auto', display: 'flex', flexDirection: 'column' }}>
-                  {/* badge & icon */}
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-                    <div style={{ width: '44px', height: '44px', borderRadius: '4px', background: 'var(--bg-tertiary)', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      {getProjectIcon(project.category)}
-                    </div>
-                    {project.badge && <span className="project-badge">{project.badge}</span>}
-                  </div>
-
-                  {/* clean title without dash or extra text */}
-                  <h3 className="project-title font-mono" style={{ fontSize: '1.35rem', marginBottom: '12px', height: '36px', display: 'flex', alignItems: 'center' }}>
-                    {project.title}
-                  </h3>
-
-                  {/* description */}
-                  <p className="project-desc" style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '20px', lineHeight: '1.6', minHeight: '90px' }}>
-                    {project.description}
-                  </p>
-
-                  {/* tech stack tags with fixed 80px height container for 100% horizontal alignment */}
-                  <div className="tech-tags" style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '24px', height: '80px', alignContent: 'flex-start', overflow: 'hidden' }}>
-                    {techList.map((tech, idx) => (
-                      <span key={idx} className="tag">{tech}</span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* footer links pinned to exact same bottom pixel */}
-                <div className="project-footer font-mono" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid var(--border-color)', paddingTop: '16px', marginTop: 'auto' }}>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>
-                    {project.category}
-                  </div>
-
-                  <div style={{ display: 'flex', gap: '10px' }}>
-                    {project.github_url && (
-                      <a
-                        href={project.github_url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="icon-btn"
-                        title="GitHub Repository"
-                        style={{ width: '36px', height: '36px' }}
-                      >
-                        <Github size={16} />
-                      </a>
-                    )}
-                    {project.demo_url && (
-                      <a
-                        href={project.demo_url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="icon-btn"
-                        title="Live Link"
-                        style={{ width: '36px', height: '36px' }}
-                      >
-                        <ExternalLink size={16} />
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </PixelCard>
-            );
-          })}
-        </div>
       </div>
     </section>
   );

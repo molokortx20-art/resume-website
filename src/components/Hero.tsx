@@ -1,20 +1,17 @@
-// hero section component
 import React, { useState, useEffect } from 'react';
 import { PersonalInfo } from '../types';
-import { Mail, Send, Github, ChevronRight, Server, Code, GraduationCap, Terminal } from 'lucide-react';
-import { PixelCard } from './TerminalComponents';
+import { Send, Github, ChevronRight, Server, Code, GraduationCap } from 'lucide-react';
 
 interface HeroProps {
   info: PersonalInfo;
   theme: 'dark' | 'light';
 }
 
-// role titles
 const ROLES = [
-  'Fullstack Developer (React/TS/Node.js/SQL)',
-  'Game Server Engineer (CS2/C++/Java)',
+  'Fullstack Developer (React / TS / Node.js / SQL)',
+  'Game Server Engineer (CS2 / GMod / Rust / C++)',
   'GameCore-Panel, wallpaper & CoordHud Creator',
-  'Linux Sysadmin & Nginx Architect'
+  'Linux Sysadmin & Network Engineer'
 ];
 
 export const Hero: React.FC<HeroProps> = ({ info }) => {
@@ -22,16 +19,15 @@ export const Hero: React.FC<HeroProps> = ({ info }) => {
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
 
-  // typing effect
   useEffect(() => {
     const currentRole = ROLES[roleIndex];
-    const updateSpeed = isDeleting ? 30 : 70;
+    const updateSpeed = isDeleting ? 25 : 60;
 
     const timer = setTimeout(() => {
       if (!isDeleting) {
         setDisplayText(currentRole.substring(0, displayText.length + 1));
         if (displayText === currentRole) {
-          setTimeout(() => setIsDeleting(true), 2000);
+          setTimeout(() => setIsDeleting(true), 2200);
         }
       } else {
         setDisplayText(currentRole.substring(0, displayText.length - 1));
@@ -46,118 +42,140 @@ export const Hero: React.FC<HeroProps> = ({ info }) => {
   }, [displayText, isDeleting, roleIndex]);
 
   return (
-    <section id="hero" className="hero">
-      <div className="hero-overlay-mask"></div>
+    <section id="hero" className="pt-12 pb-16 relative overflow-hidden">
+      
+      {/* Background Radial Glow */}
+      <div className="absolute top-10 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+      
+      <div className="max-w-7xl mx-auto px-4 space-y-12">
+        
+        {/* Upper Status Badges */}
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full theme-card text-xs font-mono theme-text-muted shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-sm shadow-emerald-500"></span>
+            <span className="text-emerald-500 font-bold">STATUS:</span>
+            <span>{info.status || 'Открыт к предложениям'}</span>
+          </div>
+          <div className="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full theme-card text-xs font-mono theme-text-muted">
+            <span>FULLSTACK</span>
+            <span>·</span>
+            <span>GAME ENGINE</span>
+            <span>·</span>
+            <span>SYSADMIN</span>
+          </div>
+        </div>
 
-      <div className="container hero-content">
-        <div className="hero-grid">
-          <div>
-            {/* status */}
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 14px', borderRadius: '4px', background: 'var(--bg-tertiary)', border: '1px solid var(--border-color)', fontSize: '0.85rem', fontFamily: 'var(--font-mono)', marginBottom: '20px' }}>
-              <Terminal size={14} className="text-accent" />
-              <span>STATUS: {info.status || 'AVAILABLE FOR CORE PROJECTS'}</span>
-            </div>
-
-            {/* title */}
-            <h1 style={{ fontSize: '3.4rem', lineHeight: '1.1', marginBottom: '16px' }}>
+        {/* Hero Grid */}
+        <div className="grid lg:grid-cols-12 gap-10 items-center">
+          
+          {/* Left Text Column */}
+          <div className="lg:col-span-7 space-y-6">
+            <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight theme-text-main">
               {info.name || 'Ковалёв Николай Николаевич'}
             </h1>
 
-            {/* typing role */}
-            <div style={{ fontSize: '1.2rem', marginBottom: '24px', fontFamily: 'var(--font-mono)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ color: 'var(--text-muted)' }}>$ exec --role:</span>
-              <span className="text-accent">{displayText}</span>
-              <span className="terminal-cursor"></span>
+            {/* Typing Role Banner */}
+            <div className="text-sm sm:text-base font-mono flex items-center gap-2 theme-card p-3.5 rounded-2xl shadow-inner">
+              <span className="theme-text-dim">$</span>
+              <span className="text-emerald-500 font-semibold">{displayText}</span>
+              <span className="w-2 h-4 bg-emerald-500 inline-block animate-pulse"></span>
             </div>
 
-            {/* bio */}
-            <p style={{ fontSize: '1.05rem', color: 'var(--text-muted)', marginBottom: '32px', maxWidth: '620px', lineHeight: '1.7' }}>
+            <p className="theme-text-muted text-base sm:text-lg leading-relaxed max-w-2xl">
               {info.bio}
             </p>
 
-            {/* cta buttons */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
-              <a href="#contact" className="btn btn-primary">
-                <span>Связаться</span>
-                <ChevronRight size={18} />
+            {/* Action Buttons */}
+            <div className="flex flex-wrap items-center gap-4 pt-2">
+              <a 
+                href={`https://t.me/${info.telegram?.replace('@', '')}`}
+                target="_blank"
+                rel="noreferrer"
+                className="theme-btn-primary font-semibold px-6 py-3 rounded-full flex items-center gap-2 shadow-xl"
+              >
+                <Send size={16} />
+                <span>Связаться в Telegram</span>
               </a>
 
-              <a href="#projects" className="btn btn-outline">
-                <span>Проекты & Исходный код</span>
+              <a 
+                href="#projects" 
+                className="theme-btn-outline font-semibold px-6 py-3 rounded-full flex items-center gap-2"
+              >
+                <span>Смотреть проекты</span>
+                <ChevronRight size={16} />
               </a>
 
-              {/* socials */}
-              <div style={{ display: 'flex', gap: '10px', marginLeft: 'auto' }}>
-                <a href={`mailto:${info.email}`} className="icon-btn" title="Email" target="_blank" rel="noreferrer">
-                  <Mail size={18} />
-                </a>
-                <a href={`https://t.me/${info.telegram?.replace('@', '')}`} className="icon-btn" title="Telegram" target="_blank" rel="noreferrer">
-                  <Send size={18} />
-                </a>
-                <a href={info.github || 'https://github.com/molokortx20-art'} className="icon-btn" title="GitHub Profile" target="_blank" rel="noreferrer">
-                  <Github size={18} />
-                </a>
-              </div>
+              <a 
+                href={info.github || 'https://github.com/molokortx20-art'}
+                target="_blank"
+                rel="noreferrer"
+                className="theme-btn-outline font-semibold px-5 py-3 rounded-full flex items-center gap-2"
+              >
+                <Github size={16} />
+                <span>GitHub</span>
+              </a>
             </div>
           </div>
 
-          {/* terminal code window */}
-          <div>
-            <PixelCard style={{ padding: '24px', fontFamily: 'var(--font-mono)', fontSize: '0.85rem', lineHeight: '1.8' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px', borderBottom: '1px solid var(--border-color)', paddingBottom: '10px', color: 'var(--text-dim)' }}>
-                <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ef4444' }}></div>
-                <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#f59e0b' }}></div>
-                <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#10b981' }}></div>
-                <span style={{ marginLeft: 'auto', fontSize: '0.75rem' }}>profile.json</span>
+          {/* Right Profile Code Card */}
+          <div className="lg:col-span-5 theme-card rounded-3xl p-6 font-mono text-xs leading-relaxed space-y-4 shadow-2xl relative">
+            <div className="flex items-center justify-between pb-3 border-b border-[var(--border-main)] theme-text-dim">
+              <div className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-rose-500/80 inline-block"></span>
+                <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></span>
+                <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
               </div>
+              <span className="text-[11px] theme-text-dim">developer_profile.json</span>
+            </div>
 
-              <div>
-                <span style={{ color: 'var(--text-dim)' }}>// developer profile</span><br />
-                <span style={{ color: 'var(--primary)' }}>const</span> developer = &#123;<br />
-                &nbsp;&nbsp;name: <span style={{ color: '#10b981' }}>"Ковалёв Николай"</span>,<br />
-                &nbsp;&nbsp;github: <span style={{ color: '#10b981' }}>"@molokortx20-art"</span>,<br />
-                &nbsp;&nbsp;core_projects: [<span style={{ color: '#10b981' }}>"GameCore-Panel"</span>, <span style={{ color: '#10b981' }}>"wallpaper"</span>, <span style={{ color: '#10b981' }}>"CoordHud"</span>],<br />
-                &nbsp;&nbsp;specialization: <span style={{ color: '#10b981' }}>"Fullstack & Game Systems"</span>,<br />
-                &nbsp;&nbsp;stack: [<span style={{ color: '#10b981' }}>"React"</span>, <span style={{ color: '#10b981' }}>"TS"</span>, <span style={{ color: '#10b981' }}>"Node"</span>, <span style={{ color: '#10b981' }}>"C++"</span>, <span style={{ color: '#10b981' }}>"SQL"</span>],<br />
-                &nbsp;&nbsp;fast_learner: <span style={{ color: 'var(--primary)' }}>true</span><br />
-                &#125;;
-              </div>
-            </PixelCard>
+            <div className="space-y-1.5 font-mono">
+              <div><span className="theme-text-dim">// Personal developer manifesto</span></div>
+              <div><span className="text-emerald-500">const</span> developer = &#123;</div>
+              <div className="pl-4">name: <span className="text-emerald-600 dark:text-emerald-300">"{info.name}"</span>,</div>
+              <div className="pl-4">handle: <span className="text-emerald-600 dark:text-emerald-300">"@molokortx20-art"</span>,</div>
+              <div className="pl-4">core_projects: [<span className="text-emerald-600 dark:text-emerald-300">"GameCore-Panel"</span>, <span className="text-emerald-600 dark:text-emerald-300">"wallpaper"</span>, <span className="text-emerald-600 dark:text-emerald-300">"CoordHud"</span>],</div>
+              <div className="pl-4">specialization: <span className="text-emerald-600 dark:text-emerald-300">"Fullstack Web & Game Systems"</span>,</div>
+              <div className="pl-4">tech_stack: [<span className="text-emerald-600 dark:text-emerald-300">"React"</span>, <span className="text-emerald-600 dark:text-emerald-300">"TypeScript"</span>, <span className="text-emerald-600 dark:text-emerald-300">"Node.js"</span>, <span className="text-emerald-600 dark:text-emerald-300">"C++"</span>, <span className="text-emerald-600 dark:text-emerald-300">"Linux"</span>],</div>
+              <div className="pl-4">fast_learner: <span className="text-emerald-500">true</span></div>
+              <div>&#125;;</div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* 3 Stats Cards in Horizontal Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+          <div className="theme-card rounded-2xl p-6 flex items-center gap-4 shadow-xl">
+            <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-500 shrink-0">
+              <Server size={24} />
+            </div>
+            <div>
+              <div className="text-base font-extrabold tracking-wide theme-text-main">GAME SERVERS</div>
+              <div className="text-xs theme-text-muted">CS2, Garry's Mod, Rust, Minecraft</div>
+            </div>
+          </div>
+
+          <div className="theme-card rounded-2xl p-6 flex items-center gap-4 shadow-xl">
+            <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-500 shrink-0">
+              <Code size={24} />
+            </div>
+            <div>
+              <div className="text-base font-extrabold tracking-wide theme-text-main">FULLSTACK WEB</div>
+              <div className="text-xs theme-text-muted">React, TypeScript, Node.js, REST API</div>
+            </div>
+          </div>
+
+          <div className="theme-card rounded-2xl p-6 flex items-center gap-4 shadow-xl">
+            <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-500 shrink-0">
+              <GraduationCap size={24} />
+            </div>
+            <div>
+              <div className="text-base font-extrabold tracking-wide theme-text-main">ВУЗ ОБУЧЕНИЕ</div>
+              <div className="text-xs theme-text-muted">Информационные системы и технологии</div>
+            </div>
           </div>
         </div>
 
-        {/* stats */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginTop: '50px' }}>
-          <PixelCard style={{ padding: '24px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-              <Server size={32} className="text-accent" />
-              <div>
-                <div style={{ fontSize: '1.3rem', fontWeight: 800 }} className="font-mono">GAME SERVERS</div>
-                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Garry's Mod, CS2, Rust, Minecraft</div>
-              </div>
-            </div>
-          </PixelCard>
-
-          <PixelCard style={{ padding: '24px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-              <Code size={32} className="text-accent" />
-              <div>
-                <div style={{ fontSize: '1.3rem', fontWeight: 800 }} className="font-mono">FULLSTACK</div>
-                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>React, TypeScript, Node.js, SQL</div>
-              </div>
-            </div>
-          </PixelCard>
-
-          <PixelCard style={{ padding: '24px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-              <GraduationCap size={32} className="text-accent" />
-              <div>
-                <div style={{ fontSize: '1.3rem', fontWeight: 800 }} className="font-mono">УНИВЕРСИТЕТ</div>
-                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Информ. системы и технологии</div>
-              </div>
-            </div>
-          </PixelCard>
-        </div>
       </div>
     </section>
   );

@@ -1,8 +1,6 @@
-// about component
 import React from 'react';
 import { PersonalInfo } from '../types';
-import { UserCheck, BookOpen, Terminal, Sparkles, MapPin, Mail, Send } from 'lucide-react';
-import { PixelCard, TerminalText } from './TerminalComponents';
+import { UserCheck, Sparkles, BookOpen, Mail, Send, MapPin, Terminal } from 'lucide-react';
 
 interface AboutProps {
   info: PersonalInfo;
@@ -10,87 +8,84 @@ interface AboutProps {
 
 export const About: React.FC<AboutProps> = ({ info }) => {
   return (
-    <section id="about" style={{ padding: '80px 0' }}>
-      <div className="container">
-        {/* title */}
-        <h2 className="section-title">
-          <UserCheck className="text-accent" size={32} />
-          <span>Обо <span className="text-gradient">мне & Направлении</span></span>
-        </h2>
-        <div style={{ marginBottom: '32px' }}>
-          <TerminalText text="system.getProfileInfo() --loading university & dev experience..." prefix="$ " />
+    <section id="about" className="py-20">
+      <div className="max-w-7xl mx-auto px-4 space-y-10">
+        
+        <div className="space-y-2">
+          <span className="text-xs font-mono tracking-widest text-emerald-500 uppercase">ОБО МНЕ</span>
+          <h2 className="text-3xl font-extrabold flex items-center gap-3 theme-text-main">
+            <UserCheck className="text-emerald-500" size={32} />
+            <span>О себе & Ключевые компетенции</span>
+          </h2>
+          <p className="theme-text-muted text-sm">Проектирование веб-сервисов, системное администрирование и сетевая инженерия.</p>
         </div>
 
-        {/* content grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '28px' }}>
-          {/* bio card */}
-          <PixelCard style={{ padding: '32px' }}>
-            <h3 style={{ fontSize: '1.4rem', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <Sparkles className="text-accent" size={22} />
-              <span className="font-mono">Ключевая Специализация</span>
+        <div className="grid md:grid-cols-2 gap-8">
+          {/* Main Bio Card */}
+          <div className="theme-card rounded-3xl p-8 space-y-6">
+            <h3 className="text-xl font-bold flex items-center gap-3 theme-text-main">
+              <Sparkles className="text-emerald-500" size={22} />
+              <span>Ключевая Специализация</span>
             </h3>
-            <p style={{ color: 'var(--text-muted)', marginBottom: '20px', lineHeight: '1.7' }}>
-              Студент университета по направлению <strong>«Информационные системы и технологии»</strong>. Свободно настраиваю и оптимизирую высоконагруженную инфраструктуру (Linux/Nginx), пишу сложные сетевые сервисы и гейммоды (GLua, HermessUI, C++, Java, Node.js, SQL), а также разрабатываю клиентский веб-фронтенд (React, TypeScript).
+            <p className="theme-text-muted leading-relaxed text-sm sm:text-base">
+              Студент университета по направлению <strong>«Информационные системы и технологии»</strong>. Свободно настраиваю и оптимизирую высоконагруженную инфраструктуру (Linux/Nginx), пишу сложные сетевые сервисы и гейммоды (GLua, C++, Java, Node.js, SQL), а также разрабатываю клиентский веб-фронтенд (React, TypeScript).
             </p>
-            <p style={{ color: 'var(--text-muted)', lineHeight: '1.7' }}>
-              <strong>Быстрая обучаемость</strong> — моё главное преимущество. Мгновенно разбираюсь в чужом коде любого уровня сложности, осваиваю фреймворки и применяю лучшие практики в архитектуре.
+            <p className="theme-text-muted leading-relaxed text-sm">
+              <strong className="text-emerald-500">Быстрая обучаемость</strong> — моё главное преимущество. Мгновенно разбираюсь в чужом коде любого уровня сложности, осваиваю фреймворки и применяю лучшие архитектурные практики.
             </p>
-          </PixelCard>
+          </div>
 
-          {/* info card */}
-          <PixelCard style={{ padding: '32px' }}>
-            <h3 style={{ fontSize: '1.4rem', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <BookOpen className="text-accent" size={22} />
-              <span className="font-mono">Прямые Данные</span>
+          {/* Quick Info Grid Card */}
+          <div className="theme-card rounded-3xl p-8 space-y-6">
+            <h3 className="text-xl font-bold flex items-center gap-3 theme-text-main">
+              <BookOpen className="text-emerald-500" size={22} />
+              <span>Прямые Данные</span>
             </h3>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              {/* email */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                <div style={{ width: '40px', height: '40px', borderRadius: '4px', background: 'var(--bg-tertiary)', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)' }}>
+            <div className="space-y-4 font-mono text-xs">
+              <div className="flex items-center gap-4 p-3.5 theme-inner-box rounded-2xl">
+                <div className="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-500 shrink-0">
                   <Mail size={18} />
                 </div>
                 <div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)', fontFamily: 'var(--font-mono)' }}>EMAIL</div>
-                  <a href={`mailto:${info.email}`} style={{ color: 'var(--text-main)', textDecoration: 'none', fontWeight: 600, fontFamily: 'var(--font-mono)' }}>{info.email || 'kkovalev939@gmail.com'}</a>
+                  <div className="theme-text-dim text-[11px]">EMAIL</div>
+                  <a href={`mailto:${info.email}`} className="theme-text-main font-semibold hover:text-emerald-500 transition">{info.email || 'kkovalev939@gmail.com'}</a>
                 </div>
               </div>
 
-              {/* telegram */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                <div style={{ width: '40px', height: '40px', borderRadius: '4px', background: 'var(--bg-tertiary)', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)' }}>
+              <div className="flex items-center gap-4 p-3.5 theme-inner-box rounded-2xl">
+                <div className="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-500 shrink-0">
                   <Send size={18} />
                 </div>
                 <div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)', fontFamily: 'var(--font-mono)' }}>TELEGRAM</div>
-                  <a href={`https://t.me/${info.telegram?.replace('@', '')}`} target="_blank" rel="noreferrer" style={{ color: 'var(--text-main)', textDecoration: 'none', fontWeight: 600, fontFamily: 'var(--font-mono)' }}>{info.telegram || '@fivvcdd'}</a>
+                  <div className="theme-text-dim text-[11px]">TELEGRAM</div>
+                  <a href={`https://t.me/${info.telegram?.replace('@', '')}`} target="_blank" rel="noreferrer" className="theme-text-main font-semibold hover:text-emerald-500 transition">{info.telegram || '@fivvcdd'}</a>
                 </div>
               </div>
 
-              {/* location */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                <div style={{ width: '40px', height: '40px', borderRadius: '4px', background: 'var(--bg-tertiary)', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)' }}>
+              <div className="flex items-center gap-4 p-3.5 theme-inner-box rounded-2xl">
+                <div className="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-500 shrink-0">
                   <MapPin size={18} />
                 </div>
                 <div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)', fontFamily: 'var(--font-mono)' }}>LOCATION</div>
-                  <div style={{ fontWeight: 600, fontFamily: 'var(--font-mono)' }}>{info.location || 'Россия'}</div>
+                  <div className="theme-text-dim text-[11px]">LOCATION</div>
+                  <div className="theme-text-main font-semibold">{info.location || 'Россия'}</div>
                 </div>
               </div>
 
-              {/* university */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                <div style={{ width: '40px', height: '40px', borderRadius: '4px', background: 'var(--bg-tertiary)', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)' }}>
+              <div className="flex items-center gap-4 p-3.5 theme-inner-box rounded-2xl">
+                <div className="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-500 shrink-0">
                   <Terminal size={18} />
                 </div>
                 <div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)', fontFamily: 'var(--font-mono)' }}>EDUCATION</div>
-                  <div style={{ fontWeight: 600, fontSize: '0.9rem', fontFamily: 'var(--font-mono)' }}>{info.education}</div>
+                  <div className="theme-text-dim text-[11px]">EDUCATION</div>
+                  <div className="theme-text-main font-semibold">{info.education}</div>
                 </div>
               </div>
             </div>
-          </PixelCard>
+          </div>
         </div>
+
       </div>
     </section>
   );

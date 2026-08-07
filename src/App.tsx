@@ -1,4 +1,3 @@
-// main application component
 import React, { useState, useEffect } from 'react';
 import { ResumeData } from './types';
 import { Header } from './components/Header';
@@ -8,9 +7,8 @@ import { Skills } from './components/Skills';
 import { Experience } from './components/Experience';
 import { Projects } from './components/Projects';
 import { Contact } from './components/Contact';
-import { Terminal, Heart } from 'lucide-react';
+import { Heart, Send, Github } from 'lucide-react';
 
-// default resume dataset strictly for molokortx20-art
 const defaultResumeData: ResumeData = {
   info: {
     name: 'Ковалёв Николай Николаевич',
@@ -55,7 +53,6 @@ const defaultResumeData: ResumeData = {
       technologies: 'React, TypeScript, Node.js, Express, REST API, PHP, SQL'
     }
   ],
-  // clean titles without dash
   projects: [
     {
       id: 1,
@@ -88,19 +85,22 @@ const defaultResumeData: ResumeData = {
 };
 
 export const App: React.FC = () => {
-  // theme state
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const [resumeData, setResumeData] = useState<ResumeData>(defaultResumeData);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // toggle theme
   const toggleTheme = () => {
     const nextTheme = theme === 'dark' ? 'light' : 'dark';
     setTheme(nextTheme);
+    document.documentElement.className = nextTheme;
     document.body.className = `${nextTheme}-theme`;
   };
 
-  // fetch data from rest api
+  useEffect(() => {
+    document.documentElement.className = theme;
+    document.body.className = `${theme}-theme`;
+  }, [theme]);
+
   const fetchResumeData = async () => {
     try {
       const res = await fetch('/api/resume');
@@ -116,7 +116,7 @@ export const App: React.FC = () => {
         }
       }
     } catch (err) {
-      console.log('Using local initial dataset...');
+      console.log('Using local dataset...');
     }
   };
 
@@ -124,28 +124,24 @@ export const App: React.FC = () => {
     fetchResumeData();
   }, []);
 
-  // toast notification
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 3500);
   };
 
-  // pdf print export
   const handleDownloadPdf = () => {
     window.print();
   };
 
   return (
-    <div className="app-wrapper">
-      {/* header */}
+    <div className="min-h-screen flex flex-col transition-colors duration-300">
       <Header
         theme={theme}
         toggleTheme={toggleTheme}
         onDownloadPdf={handleDownloadPdf}
       />
 
-      {/* main content */}
-      <main>
+      <main className="flex-1">
         <Hero info={resumeData.info} theme={theme} />
         <About info={resumeData.info} />
         <Skills skills={resumeData.skills} />
@@ -154,28 +150,46 @@ export const App: React.FC = () => {
         <Contact info={resumeData.info} onShowToast={showToast} />
       </main>
 
-      {/* footer */}
-      <footer style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)', padding: '32px 0', marginTop: '60px' }}>
-        <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <div className="logo-badge" style={{ width: '32px', height: '32px' }}>
-              <Terminal size={16} />
-            </div>
-            <span style={{ fontWeight: 700 }} className="font-mono">
-              Ковалёв Николай <span className="text-accent">© 2026</span>
-            </span>
+      {/* Floating Socials (Bottom-Left) */}
+      <div className="fixed bottom-6 left-6 z-50 flex items-center gap-3">
+        <a 
+          href={`https://t.me/${resumeData.info.telegram?.replace('@', '')}`}
+          target="_blank" 
+          rel="noreferrer"
+          className="w-11 h-11 rounded-full theme-card flex items-center justify-center theme-text-main hover:border-emerald-500 hover:scale-110 transition duration-300 shadow-xl"
+          title="Telegram"
+        >
+          <Send size={18} />
+        </a>
+        <a 
+          href={resumeData.info.github || 'https://github.com/molokortx20-art'} 
+          target="_blank" 
+          rel="noreferrer"
+          className="w-11 h-11 rounded-full theme-card flex items-center justify-center theme-text-main hover:border-emerald-500 hover:scale-110 transition duration-300 shadow-xl"
+          title="GitHub"
+        >
+          <Github size={18} />
+        </a>
+      </div>
+
+      {/* Footer */}
+      <footer className="border-t border-[var(--border-main)] py-12 mt-20 transition-colors duration-300">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm theme-text-muted">
+          <div className="flex items-center gap-3">
+            <span className="theme-text-main font-bold">✦ Ковалёв Николай</span>
+            <span className="theme-text-dim font-mono text-xs">© 2026</span>
           </div>
 
-          <p style={{ fontSize: '0.85rem', color: 'var(--text-dim)' }} className="font-mono">
+          <p className="font-mono text-xs theme-text-dim">
             Bespoke Production Engine • molokortx20-art
           </p>
         </div>
       </footer>
 
-      {/* toast */}
+      {/* Toast Notification */}
       {toastMessage && (
         <div className="toast">
-          <Heart size={20} className="text-accent" />
+          <Heart size={18} className="text-emerald-500 fill-emerald-500/20" />
           <span>{toastMessage}</span>
         </div>
       )}
