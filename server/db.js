@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const dbPath = path.resolve(__dirname, 'database.json');
 
-// initial dataset for molokortx20-art
+// initial dataset strictly for molokortx20-art
 const initialData = {
   personal_info: [{
     id: 1,
@@ -53,7 +53,7 @@ const initialData = {
       technologies: 'React, TypeScript, Node.js, Express, REST API, PHP, SQL'
     }
   ],
-  // target projects from github.com/molokortx20-art
+  // target projects from github.com/molokortx20-art (strictly GameCore-Panel, wallpaper, CoordHud)
   projects: [
     {
       id: 1,
@@ -93,7 +93,7 @@ class JSONDatabase {
   }
 
   init() {
-    // force reset database.json
+    // force write initialData to database.json
     this.save(initialData);
   }
 
