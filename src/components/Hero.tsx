@@ -13,7 +13,7 @@ interface HeroProps {
 const ROLES = [
   'Fullstack Developer (React/TS/Node.js/SQL)',
   'Game Server Engineer (CS2/C++/Java)',
-  'wallpaper & CoordHud Creator',
+  'GameCore-Panel, wallpaper & CoordHud Creator',
   'Linux Sysadmin & Nginx Architect'
 ];
 
@@ -116,7 +116,7 @@ export const Hero: React.FC<HeroProps> = ({ info }) => {
                 <span style={{ color: 'var(--primary)' }}>const</span> developer = &#123;<br />
                 &nbsp;&nbsp;name: <span style={{ color: '#10b981' }}>"Ковалёв Николай"</span>,<br />
                 &nbsp;&nbsp;github: <span style={{ color: '#10b981' }}>"@molokortx20-art"</span>,<br />
-                &nbsp;&nbsp;core_projects: [<span style={{ color: '#10b981' }}>"wallpaper"</span>, <span style={{ color: '#10b981' }}>"CoordHud"</span>],<br />
+                &nbsp;&nbsp;core_projects: [<span style={{ color: '#10b981' }}>"GameCore-Panel"</span>, <span style={{ color: '#10b981' }}>"wallpaper"</span>, <span style={{ color: '#10b981' }}>"CoordHud"</span>],<br />
                 &nbsp;&nbsp;specialization: <span style={{ color: '#10b981' }}>"Fullstack & Game Systems"</span>,<br />
                 &nbsp;&nbsp;stack: [<span style={{ color: '#10b981' }}>"React"</span>, <span style={{ color: '#10b981' }}>"TS"</span>, <span style={{ color: '#10b981' }}>"Node"</span>, <span style={{ color: '#10b981' }}>"C++"</span>, <span style={{ color: '#10b981' }}>"SQL"</span>],<br />
                 &nbsp;&nbsp;fast_learner: <span style={{ color: 'var(--primary)' }}>true</span><br />

@@ -43,8 +43,8 @@ const defaultResumeData: ResumeData = {
       company: 'Game Server Infrastructure & Development',
       position: 'Lead Game Server Engineer & Linux Sysadmin',
       period: '2021 — Настоящее время',
-      description: 'Проектирование и программирование игровых серверов Garry\'s Mod, CS2, Minecraft и Rust. Написание CoordHud, плагинов на C++, Java, Lua. Настройка сетевой инфраструктуры Linux & Nginx.',
-      technologies: 'Lua/GLua, CoordHud, Java, C++, Linux, Nginx, MySQL, SQLite, Bash'
+      description: 'Проектирование и программирование игровых серверов Garry\'s Mod, CS2, Minecraft и Rust. Написание GameCore Panel, CoordHud, плагинов на C++, Java, Lua. Настройка сетевой инфраструктуры Linux & Nginx.',
+      technologies: 'React, Node.js, Express REST API, CoordHud, Java, C++, Linux, Nginx, MySQL, SQLite, Bash'
     },
     {
       id: 2,
@@ -59,6 +59,15 @@ const defaultResumeData: ResumeData = {
   projects: [
     {
       id: 1,
+      title: 'GameCore Panel — Server Management & REST API',
+      category: 'Fullstack / Backend',
+      description: 'Единая веб-панель управления и REST API для администрирования игровых серверов (Garry\'s Mod, CS2, Rust). Web-RCON консоль в реальном времени, мониторинг нагрузки CPU/RAM и Steam OAuth 2.0.',
+      tech_stack: 'React, TypeScript, Node.js, Express, REST API, SQL',
+      github_url: 'https://github.com/molokortx20-art/GameCore-Panel',
+      badge: 'Fullstack Engine'
+    },
+    {
+      id: 2,
       title: 'wallpaper — Interactive Visuals & Shader Engine',
       category: 'Frontend',
       description: 'Система динамических интерактивных обоев и визуальных эффектов для веб-клиентов и рабочих столов. Пиксельные эффекты, шейдеры и интерактивные анимации.',
@@ -67,7 +76,7 @@ const defaultResumeData: ResumeData = {
       badge: 'Visual Engine'
     },
     {
-      id: 2,
+      id: 3,
       title: 'CoordHud — Navigation & Coordinate HUD',
       category: 'Game Dev / Systems',
       description: 'Кастомный оверлей модуль отображения координат, компаса и навигационного худа для Counter-Strike 2 (C++ / Direct3D).',
