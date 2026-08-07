@@ -1,6 +1,6 @@
-// header navigation component
-import React from 'react';
-import { Sun, Moon, FileDown, Terminal } from 'lucide-react';
+// header navigation component with mobile drawer
+import React, { useState } from 'react';
+import { Sun, Moon, FileDown, Terminal, Menu, X } from 'lucide-react';
 
 interface HeaderProps {
   theme: 'dark' | 'light';
@@ -13,11 +13,15 @@ export const Header: React.FC<HeaderProps> = ({
   toggleTheme,
   onDownloadPdf,
 }) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const closeMenu = () => setMobileMenuOpen(false);
+
   return (
     <header className="header">
       <div className="container header-content">
         {/* logo */}
-        <a href="#hero" className="logo">
+        <a href="#hero" className="logo" onClick={closeMenu}>
           <div className="logo-badge">
             <Terminal size={20} />
           </div>
@@ -26,8 +30,8 @@ export const Header: React.FC<HeaderProps> = ({
           </span>
         </a>
 
-        {/* nav links */}
-        <nav>
+        {/* desktop nav links */}
+        <nav className="desktop-nav">
           <ul className="nav-links">
             <li><a href="#about" className="nav-link">О себе</a></li>
             <li><a href="#skills" className="nav-link">Навыки</a></li>
@@ -53,8 +57,28 @@ export const Header: React.FC<HeaderProps> = ({
             <FileDown size={15} />
             <span>PDF</span>
           </button>
+
+          {/* mobile menu toggle button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="icon-btn mobile-menu-toggle"
+            aria-label="Toggle Menu"
+          >
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
       </div>
+
+      {/* mobile drawer menu */}
+      {mobileMenuOpen && (
+        <div className="mobile-drawer font-mono">
+          <a href="#about" onClick={closeMenu} className="mobile-nav-link">О себе</a>
+          <a href="#skills" onClick={closeMenu} className="mobile-nav-link">Навыки</a>
+          <a href="#experience" onClick={closeMenu} className="mobile-nav-link">Опыт работы</a>
+          <a href="#projects" onClick={closeMenu} className="mobile-nav-link">Проекты</a>
+          <a href="#contact" onClick={closeMenu} className="mobile-nav-link">Контакты</a>
+        </div>
+      )}
     </header>
   );
 };
