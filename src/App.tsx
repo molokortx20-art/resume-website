@@ -43,15 +43,15 @@ const defaultResumeData: ResumeData = {
       company: 'Game Server Infrastructure & Development',
       position: 'Lead Game Server Engineer & Linux Sysadmin',
       period: '2021 — Настоящее время',
-      description: 'Проектирование и программирование игровых серверов Garry\'s Mod, CS2, Minecraft и Rust. Написание интерфейса HermessUI, CoordHud, приватных режимов и плагинов на GLua, Java и C++. Настройка сетевой инфраструктуры Linux & Nginx.',
-      technologies: 'Lua/GLua, HermessUI, CoordHud, Java, C++, Linux, Nginx, MySQL, SQLite, Bash'
+      description: 'Проектирование и программирование игровых серверов Garry\'s Mod, CS2, Minecraft и Rust. Написание CoordHud, плагинов на C++, Java, Lua. Настройка сетевой инфраструктуры Linux & Nginx.',
+      technologies: 'Lua/GLua, CoordHud, Java, C++, Linux, Nginx, MySQL, SQLite, Bash'
     },
     {
       id: 2,
       company: 'Web Ecosystem & Services',
       position: 'Fullstack Web Developer',
       period: '2023 — Настоящее время',
-      description: 'Создание личных кабинетов, систем авторизации и автоматической синхронизации данных по REST API в реальном времени.',
+      description: 'Создание сервисов, личных кабинетов, систем авторизации и автоматической синхронизации данных по REST API в реальном времени.',
       technologies: 'React, TypeScript, Node.js, Express, REST API, PHP, SQL'
     }
   ],
@@ -59,15 +59,6 @@ const defaultResumeData: ResumeData = {
   projects: [
     {
       id: 1,
-      title: 'HermessUI — Modular Game Interface',
-      category: 'Game Dev / Lua',
-      description: 'Кастомный интерфейс пользователя для игровых серверов Garry\'s Mod. Включает графические виджеты, HUD, интерфейс дуэлей, инвентарей и оптимизированную систему отрисовки.',
-      tech_stack: 'GLua, Lua, Web UI, SQL',
-      github_url: 'https://github.com/molokortx20-art/HermessUI',
-      badge: 'Core UI Framework'
-    },
-    {
-      id: 2,
       title: 'wallpaper — Interactive Visuals & Shader Engine',
       category: 'Frontend',
       description: 'Система динамических интерактивных обоев и визуальных эффектов для веб-клиентов и рабочих столов. Пиксельные эффекты, шейдеры и интерактивные анимации.',
@@ -76,13 +67,13 @@ const defaultResumeData: ResumeData = {
       badge: 'Visual Engine'
     },
     {
-      id: 3,
+      id: 2,
       title: 'CoordHud — Navigation & Coordinate HUD',
-      category: 'Game Dev / Lua',
-      description: 'Кастомный модуль отображения координат, компаса и навигационного худа для игровых серверов Garry\'s Mod.',
-      tech_stack: 'GLua, Lua, Math API',
+      category: 'Game Dev / Systems',
+      description: 'Кастомный оверлей модуль отображения координат, компаса и навигационного худа для Counter-Strike 2 (C++ / Direct3D).',
+      tech_stack: 'C++, DirectX, WinAPI',
       github_url: 'https://github.com/molokortx20-art/CoordHud',
-      badge: 'HUD Extension'
+      badge: 'HUD Engine'
     }
   ]
 };
