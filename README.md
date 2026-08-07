@@ -1,42 +1,25 @@
-# Kovalev Nikolai — Fullstack Resume & Portfolio Site
+# resume-website
 
-Персональный интерактивный сайт-резюме и портфолио разработчика Ковалёва Николая Николаевича.
+Персональный сайт-резюме. Фронтенд на React 18 / TypeScript / Vite, бэкенд на Node.js / Express REST API.
 
-## 🛠 Технологический стек
-- **Frontend**: React 18, TypeScript, Vite, Custom Production CSS Design System (Bespoke Dark & Light Themes)
-- **Backend**: Node.js, Express REST API
-- **Database**: Pure JS File-based JSON/SQL Database engine (`server/db.js`)
-- **Visuals**: Pixel Matrix Assembly Animations, Command Line Typing Prompt, Dark (Red/Black) & Light (Blue/White) Wallpapers
+## 📌 Стек
+- React, TypeScript, Vite
+- Express, Node.js REST API
+- Custom CSS (Dark & Light themes)
 
-## 🚀 Команды запуск
-
-### 1. Установка зависимостей
+## 🚀 Запуск
 ```bash
+# Установка зависимостей
 npm install
+
+# Запуск REST API (порт 5000)
+npm run server
+
+# Запуск фронтенда (порт 3000)
+npm run dev
 ```
 
-### 2. Запуск сервера REST API и Vite Dev
-```bash
-npm run server   # Запуск REST API на http://localhost:5000
-npm run dev      # Запуск фронтенда на http://localhost:3000
-```
-
-### 3. Сборка для продакшена
+## 🛠 Сборка
 ```bash
 npm run build
-```
-
----
-
-## 📤 Инструкция по отправке кода в GitHub (molokortx20-art)
-
-Выполните следующие команды в терминале проекта для загрузки в ваш репозиторий:
-
-```bash
-git init
-git add .
-git commit -m "feat: initial release of Kovalev Nikolai resume website"
-git branch -M main
-git remote add origin https://github.com/molokortx20-art/resume-website.git
-git push -u origin main
 ```
