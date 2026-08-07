@@ -12,7 +12,7 @@ export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
   const [filter, setFilter] = useState<string>('Все');
 
   // filter categories
-  const categories = ['Все', 'Game Dev / Lua', 'Fullstack', 'System / Backend'];
+  const categories = ['Все', 'Fullstack / Backend', 'Frontend', 'Game Dev / Systems'];
 
   const filteredProjects = filter === 'Все'
     ? projects
@@ -34,7 +34,7 @@ export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
           <span>Реальный Код & <span className="text-gradient">Репозитории</span></span>
         </h2>
         <div style={{ marginBottom: '24px' }}>
-          <TerminalText text="gh repo list molokortx20-art --type=public,private" prefix="$ " />
+          <TerminalText text="gh repo list molokortx20-art --type=public" prefix="$ " />
         </div>
 
         {/* filter buttons */}
@@ -50,14 +50,15 @@ export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
           ))}
         </div>
 
-        {/* projects grid */}
-        <div className="projects-grid">
+        {/* projects grid with equal height cards */}
+        <div className="projects-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '24px', alignItems: 'stretch' }}>
           {filteredProjects.map(project => {
             const techList = project.tech_stack ? project.tech_stack.split(',').map(t => t.trim()) : [];
 
             return (
-              <PixelCard key={project.id} style={{ padding: '24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
-                <div>
+              <PixelCard key={project.id} style={{ padding: '28px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
+                {/* top section */}
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
                   {/* badge & icon */}
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
                     <div style={{ width: '44px', height: '44px', borderRadius: '4px', background: 'var(--bg-tertiary)', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -67,12 +68,14 @@ export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
                   </div>
 
                   {/* details */}
-                  <h3 className="project-title font-mono" style={{ fontSize: '1.25rem', marginBottom: '10px' }}>{project.title}</h3>
-                  <p className="project-desc" style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '20px', lineHeight: '1.6' }}>{project.description}</p>
+                  <h3 className="project-title font-mono" style={{ fontSize: '1.25rem', marginBottom: '12px' }}>{project.title}</h3>
+                  <p className="project-desc" style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '20px', lineHeight: '1.6', flexGrow: 1 }}>
+                    {project.description}
+                  </p>
 
-                  {/* tech stack */}
+                  {/* tech stack tags */}
                   {techList.length > 0 && (
-                    <div className="tech-tags" style={{ marginBottom: '20px' }}>
+                    <div className="tech-tags" style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '24px', minHeight: '64px', alignContent: 'flex-start' }}>
                       {techList.map((tech, idx) => (
                         <span key={idx} className="tag">{tech}</span>
                       ))}
@@ -80,8 +83,8 @@ export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
                   )}
                 </div>
 
-                {/* footer links */}
-                <div className="project-footer font-mono" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid var(--border-color)', paddingTop: '16px', marginTop: '16px' }}>
+                {/* footer links aligned perfectly */}
+                <div className="project-footer font-mono" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid var(--border-color)', paddingTop: '16px', marginTop: 'auto' }}>
                   <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>
                     {project.category}
                   </div>
