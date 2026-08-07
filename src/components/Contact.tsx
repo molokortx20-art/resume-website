@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { PersonalInfo } from '../types';
 import { Mail, Send, MapPin, Github, CheckCircle2, AlertCircle, MessageSquare } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { PixelCard, TerminalText } from './TerminalComponents';
+import { PixelCard } from './TerminalComponents';
 
 interface ContactProps {
   info: PersonalInfo;
@@ -40,20 +40,20 @@ export const Contact: React.FC<ContactProps> = ({ info, onShowToast }) => {
 
       const data = await res.json();
       if (res.ok && data.success) {
-        setStatus({ type: 'success', msg: 'Сообщение сохранено в базе данных!' });
+        setStatus({ type: 'success', msg: 'Сообщение успешно отправлено!' });
         setFormData({ name: '', email: '', message: '' });
-        onShowToast('Сообщение успешно отправлено и записано в БД!');
+        onShowToast('Сообщение отправлено!');
 
         confetti({
-          particleCount: 90,
-          spread: 80,
+          particleCount: 80,
+          spread: 70,
           origin: { y: 0.6 }
         });
       } else {
         setStatus({ type: 'error', msg: data.error || 'Ошибка отправки сообщения' });
       }
     } catch (err) {
-      setStatus({ type: 'error', msg: 'Не удалось связаться с REST API бэкендом.' });
+      setStatus({ type: 'error', msg: 'Не удалось отправить сообщение.' });
     } finally {
       setLoading(false);
     }
@@ -62,20 +62,17 @@ export const Contact: React.FC<ContactProps> = ({ info, onShowToast }) => {
   return (
     <section id="contact" style={{ padding: '80px 0' }}>
       <div className="container">
-        {/* title */}
-        <h2 className="section-title">
+        {/* clean section title */}
+        <h2 className="section-title" style={{ marginBottom: '32px' }}>
           <MessageSquare className="text-accent" size={32} />
-          <span>Прямая <span className="text-gradient">Связь & Сообщение в БД</span></span>
+          <span>Связаться <span className="text-gradient">со мной</span></span>
         </h2>
-        <div style={{ marginBottom: '24px' }}>
-          <TerminalText text="net.connect --recipient='Nikolai Kovalev'" prefix="$ " />
-        </div>
 
-        {/* grid */}
+        {/* clean grid */}
         <div className="contact-grid">
-          {/* info */}
+          {/* contact details */}
           <PixelCard style={{ padding: '32px' }}>
-            <h3 style={{ fontSize: '1.3rem', marginBottom: '24px' }} className="font-mono">Контакты</h3>
+            <h3 style={{ fontSize: '1.3rem', marginBottom: '24px' }} className="font-mono">Контактные данные</h3>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <a href={`mailto:${info.email}`} style={{ textDecoration: 'none', color: 'inherit' }}>
@@ -118,9 +115,9 @@ export const Contact: React.FC<ContactProps> = ({ info, onShowToast }) => {
             </div>
           </PixelCard>
 
-          {/* form */}
+          {/* clean contact form */}
           <PixelCard style={{ padding: '32px' }}>
-            <h3 style={{ fontSize: '1.3rem', marginBottom: '24px' }} className="font-mono">Форма Отправки</h3>
+            <h3 style={{ fontSize: '1.3rem', marginBottom: '24px' }} className="font-mono">Написать сообщение</h3>
 
             {status.msg && (
               <div style={{
@@ -143,45 +140,45 @@ export const Contact: React.FC<ContactProps> = ({ info, onShowToast }) => {
 
             <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <label className="form-label">$ INPUT_NAME</label>
+                <label className="form-label">Ваше имя / Компания</label>
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder="Имя / Компания"
+                  placeholder="Имя или Название компании"
                   className="form-input"
                   required
                 />
               </div>
 
               <div className="form-group">
-                <label className="form-label">$ INPUT_CONTACT</label>
+                <label className="form-label">Email или Telegram</label>
                 <input
                   type="text"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="Email или @telegram"
+                  placeholder="email@example.com или @username"
                   className="form-input"
                   required
                 />
               </div>
 
               <div className="form-group">
-                <label className="form-label">$ INPUT_MESSAGE</label>
+                <label className="form-label">Сообщение</label>
                 <textarea
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  placeholder="Текст сообщения..."
+                  placeholder="Текст вашего сообщения..."
                   className="form-textarea"
                   required
                 ></textarea>
               </div>
 
               <button type="submit" disabled={loading} className="btn btn-primary" style={{ width: '100%' }}>
-                {loading ? 'ЗАПИСЬ В БД...' : 'ОТПРАВИТЬ В БД'}
+                {loading ? 'Отправка...' : 'ОТПРАВИТЬ СООБЩЕНИЕ'}
               </button>
             </form>
           </PixelCard>
