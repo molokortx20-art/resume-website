@@ -2,6 +2,8 @@
 
 Персональный сайт-резюме. Фронтенд на React 18 / TypeScript / Vite, бэкенд на Node.js / Express REST API.
 
+🌐 **Live Website**: [https://resume-website-two-black.vercel.app/](https://resume-website-two-black.vercel.app/)
+
 ## 📌 Стек
 - React, TypeScript, Vite
 - Express, Node.js REST API
