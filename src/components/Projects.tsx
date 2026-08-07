@@ -50,7 +50,7 @@ export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
           ))}
         </div>
 
-        {/* projects grid with equal height cards */}
+        {/* projects grid with pixel perfect equalized height */}
         <div className="projects-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '24px', alignItems: 'stretch' }}>
           {filteredProjects.map(project => {
             const techList = project.tech_stack ? project.tech_stack.split(',').map(t => t.trim()) : [];
@@ -58,7 +58,7 @@ export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
             return (
               <PixelCard key={project.id} style={{ padding: '28px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
                 {/* top section */}
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                <div style={{ flex: '1 1 auto', display: 'flex', flexDirection: 'column' }}>
                   {/* badge & icon */}
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
                     <div style={{ width: '44px', height: '44px', borderRadius: '4px', background: 'var(--bg-tertiary)', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -67,23 +67,25 @@ export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
                     {project.badge && <span className="project-badge">{project.badge}</span>}
                   </div>
 
-                  {/* details */}
-                  <h3 className="project-title font-mono" style={{ fontSize: '1.25rem', marginBottom: '12px' }}>{project.title}</h3>
-                  <p className="project-desc" style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '20px', lineHeight: '1.6', flexGrow: 1 }}>
+                  {/* clean title without dash or extra text */}
+                  <h3 className="project-title font-mono" style={{ fontSize: '1.35rem', marginBottom: '12px', height: '36px', display: 'flex', alignItems: 'center' }}>
+                    {project.title}
+                  </h3>
+
+                  {/* description */}
+                  <p className="project-desc" style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '20px', lineHeight: '1.6', minHeight: '90px' }}>
                     {project.description}
                   </p>
 
-                  {/* tech stack tags */}
-                  {techList.length > 0 && (
-                    <div className="tech-tags" style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '24px', minHeight: '64px', alignContent: 'flex-start' }}>
-                      {techList.map((tech, idx) => (
-                        <span key={idx} className="tag">{tech}</span>
-                      ))}
-                    </div>
-                  )}
+                  {/* tech stack tags with fixed 80px height container for 100% horizontal alignment */}
+                  <div className="tech-tags" style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '24px', height: '80px', alignContent: 'flex-start', overflow: 'hidden' }}>
+                    {techList.map((tech, idx) => (
+                      <span key={idx} className="tag">{tech}</span>
+                    ))}
+                  </div>
                 </div>
 
-                {/* footer links aligned perfectly */}
+                {/* footer links pinned to exact same bottom pixel */}
                 <div className="project-footer font-mono" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid var(--border-color)', paddingTop: '16px', marginTop: 'auto' }}>
                   <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>
                     {project.category}

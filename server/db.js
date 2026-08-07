@@ -40,7 +40,7 @@ const initialData = {
       id: 1,
       company: 'Game Server Infrastructure & Development',
       position: 'Lead Game Server Engineer & Linux Sysadmin',
-      period: '2021 — Настоящее время',
+      period: '2025 — 2026',
       description: 'Проектирование и программирование игровых серверов Garry\'s Mod, CS2, Minecraft и Rust. Написание GameCore Panel, CoordHud, плагинов на C++, Java, Lua. Настройка сетевой инфраструктуры Linux & Nginx.',
       technologies: 'React, Node.js, Express REST API, CoordHud, Java, C++, Linux, Nginx, MySQL, SQLite, Bash'
     },
@@ -48,25 +48,25 @@ const initialData = {
       id: 2,
       company: 'Web Ecosystem & Services',
       position: 'Fullstack Web Developer',
-      period: '2023 — Настоящее время',
+      period: '2025 — 2026',
       description: 'Создание сервисов, личных кабинетов, систем авторизации и автоматической синхронизации данных по REST API в реальном времени.',
       technologies: 'React, TypeScript, Node.js, Express, REST API, PHP, SQL'
     }
   ],
-  // target projects from github.com/molokortx20-art (strictly GameCore-Panel, wallpaper, CoordHud)
+  // clean titles without dash
   projects: [
     {
       id: 1,
-      title: 'GameCore Panel — Server Management & REST API',
+      title: 'GameCore Panel',
       category: 'Fullstack / Backend',
-      description: 'Единая веб-панель управления и REST API для администрирования игровых серверов (Garry\'s Mod, CS2, Rust). Web-RCON консоль в реальном времени, мониторинг нагрузки CPU/RAM и Steam OAuth 2.0.',
+      description: 'Веб-панель управления и REST API для администрирования игровых серверов (Garry\'s Mod, CS2, Rust). Web-RCON консоль в реальном времени, мониторинг нагрузки CPU/RAM и Steam OAuth 2.0.',
       tech_stack: 'React, TypeScript, Node.js, Express, REST API, SQL',
       github_url: 'https://github.com/molokortx20-art/GameCore-Panel',
       badge: 'Fullstack Engine'
     },
     {
       id: 2,
-      title: 'wallpaper — Interactive Visuals & Shader Engine',
+      title: 'wallpaper',
       category: 'Frontend',
       description: 'Система динамических интерактивных обоев и визуальных эффектов для веб-клиентов и рабочих столов. Пиксельные эффекты, шейдеры и интерактивные анимации.',
       tech_stack: 'React, TypeScript, CSS Animations, Canvas',
@@ -75,7 +75,7 @@ const initialData = {
     },
     {
       id: 3,
-      title: 'CoordHud — Navigation & Coordinate HUD',
+      title: 'CoordHud',
       category: 'Game Dev / Systems',
       description: 'Кастомный оверлей модуль отображения координат, компаса и навигационного худа для Counter-Strike 2 (C++ / Direct3D).',
       tech_stack: 'C++, DirectX, WinAPI',
@@ -93,7 +93,6 @@ class JSONDatabase {
   }
 
   init() {
-    // force write initialData to database.json
     this.save(initialData);
   }
 
